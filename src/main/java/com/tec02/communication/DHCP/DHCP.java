@@ -5,7 +5,7 @@
 package com.tec02.communication.DHCP;
 
 import com.tec02.Time.TimeBase;
-import com.tec02.myloger.MyLoger;
+import com.tec02.mylogger.MyLogger;
 import java.io.File;
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -31,8 +31,8 @@ import org.dhcp4java.DHCPResponseFactory;
 public class DHCP implements Runnable {
 
     private static volatile DHCP instance;
-    private final MyLoger loger;
-    private final MyLoger macRequestLog;
+    private final MyLogger loger;
+    private final MyLogger macRequestLog;
     private final DhcpData dhcpData;
     private String dhcpHost;
     private File logdir;
@@ -45,8 +45,8 @@ public class DHCP implements Runnable {
     private final TimeBase timeBase;
 
     private DHCP() {
-        this.loger = new MyLoger();
-        this.macRequestLog = new MyLoger();
+        this.loger = new MyLogger();
+        this.macRequestLog = new MyLogger();
         this.dhcpData = DhcpData.getInstance();
         this.arp = new Arp();
         this.timeBase = new TimeBase();

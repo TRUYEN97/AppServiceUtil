@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tec02.myloger;
+package com.tec02.mylogger;
 
 import com.tec02.Time.TimeBase;
 import java.io.BufferedReader;
@@ -20,7 +20,7 @@ import java.util.TimeZone;
  *
  * @author Administrator
  */
-public class MyLoger {
+public class MyLogger {
 
     private File file;
     private TimeBase timeBase;
@@ -28,11 +28,11 @@ public class MyLoger {
     private boolean saveMemory;
     private List<Queue<String>> queueLogs;
 
-    public MyLoger() {
+    public MyLogger() {
         this(TimeBase.UTC);
     }
 
-    public MyLoger(TimeZone timeZone) {
+    public MyLogger(TimeZone timeZone) {
         this.timeBase = new TimeBase(timeZone);
         this.log = new StringBuilder();
         this.saveMemory = false;

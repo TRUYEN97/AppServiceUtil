@@ -5,7 +5,7 @@
 package com.tec02.communication.socket.Unicast.commons;
 
 import com.tec02.Time.TimeBase;
-import com.tec02.myloger.MyLoger;
+import com.tec02.mylogger.MyLogger;
 import java.io.File;
 
 /**
@@ -14,12 +14,12 @@ import java.io.File;
  */
 public class SocketLogger {
 
-    private final MyLoger loger;
+    private final MyLogger loger;
     private final TimeBase timeBase;
     private final String path;
 
     public SocketLogger(String path) {
-        this.loger = new MyLoger();
+        this.loger = new MyLogger();
         this.loger.setSaveMemory(true);
         this.timeBase = new TimeBase();
         this.path = path;

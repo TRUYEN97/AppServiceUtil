@@ -2,7 +2,6 @@ package com.tec02.API;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -14,18 +13,28 @@ import java.util.List;
  */
 public class RequestParam {
 
-    private final List<String[]> params;
-    private final List<String> paths;
+    private final ArrayList<String[]> params;
+    private final ArrayList<String> paths;
 
     public static RequestParam builder() {
         return new RequestParam();
     }
 
+    public RequestParam(ArrayList<String[]> params, ArrayList<String> paths) {
+        this.params = params;
+        this.paths = paths;
+    }
+    
     public RequestParam() {
         this.params = new ArrayList<>();
         this.paths = new ArrayList<>();
     }
 
+    @Override
+    public RequestParam clone(){
+        return new RequestParam((ArrayList)params.clone(), (ArrayList) paths.clone());
+    }
+    
     public RequestParam addParam(String key, Object... values) {
         if (key != null && values != null && values.length > 0) {
             for (Object value : values) {
