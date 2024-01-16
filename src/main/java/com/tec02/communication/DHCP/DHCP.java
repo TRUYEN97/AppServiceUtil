@@ -93,13 +93,19 @@ public class DHCP implements Runnable {
         return false;
     }
 
-    public boolean init(File logPath, int leaseTime) {
+    public void setLogdir(String logdir) {
+        this.logdir = new File(logdir);
+    }
+
+    public void setLeaseTime(int leaseTime) {
+        this.leaseTime = leaseTime;
+    }
+    
+    public boolean init() {
         if (leaseTime <= 0) {
             return false;
         }
-        this.leaseTime = leaseTime;
         DHCPPacket temp = new DHCPPacket();
-        this.logdir = logPath;
         this.loger.setSaveMemory(true);
         this.macRequestLog.setSaveMemory(true);
         this.macRequestLog.clear();
@@ -120,10 +126,6 @@ public class DHCP implements Runnable {
             e.printStackTrace();
             return false;
         }
-    }
-
-    public boolean init(File logPath) {
-        return init(logPath, leaseTime);
     }
 
     private boolean isNotHostAddress(String dhcpHost) {
@@ -228,7 +230,7 @@ public class DHCP implements Runnable {
         return sb.toString();
     }
 
-    public boolean setMacLenth(int macLength) {
+    public boolean setMacLength(int macLength) {
         if (this.dhcpData.setMacLength(macLength)) {
             showInfo();
             return true;

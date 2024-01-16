@@ -19,6 +19,7 @@ public abstract class AbsTime {
     }
 
     protected AbsTime(double spec) {
+        this();
         start(spec);
     }
 

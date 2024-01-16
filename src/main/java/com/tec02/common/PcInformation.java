@@ -22,24 +22,24 @@ import java.util.Properties;
  *
  * @author Administrator
  */
-public class ProgramInformation {
+public class PcInformation {
 
-    private static volatile ProgramInformation instance;
+    private static volatile PcInformation instance;
     private Map<String, List<String>> networkInfomation;
     private final String pc_name;
 
-    private ProgramInformation() {
+    private PcInformation() {
         this.networkInfomation = scanHostIp();
         this.pc_name = getComputerName();
     }
 
-    public static ProgramInformation getInstance() {
-        ProgramInformation ins = ProgramInformation.instance;
+    public static PcInformation getInstance() {
+        PcInformation ins = PcInformation.instance;
         if (ins == null) {
-            synchronized (ProgramInformation.class) {
-                ins = ProgramInformation.instance;
+            synchronized (PcInformation.class) {
+                ins = PcInformation.instance;
                 if (ins == null) {
-                    ProgramInformation.instance = ins = new ProgramInformation();
+                    PcInformation.instance = ins = new PcInformation();
                 }
             }
         }

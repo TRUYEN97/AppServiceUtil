@@ -61,7 +61,7 @@ public class MyListTabel<T> {
 
             @Override
             public void mouseMoved(MouseEvent e) {
-                if(e.getButton() == MouseEvent.NOBUTTON){
+                if (e.getButton() == MouseEvent.NOBUTTON) {
                     oldPonit = null;
                 }
             }
@@ -77,6 +77,18 @@ public class MyListTabel<T> {
 
     public void reset() {
         this.defaultListModel.removeAllElements();
+    }
+
+    public int size() {
+        return this.defaultListModel.getSize();
+    }
+
+    public void setItem(int index, T element) {
+        this.defaultListModel.set(0, element);
+    }
+    
+    public void addItem(int index, T element) {
+        this.defaultListModel.add(0, element);
     }
 
     public List<T> getAllItem() {
@@ -140,10 +152,6 @@ public class MyListTabel<T> {
 
     public int getSelectedCount() {
         return getSelectedValuesList().size();
-    }
-
-    public int size() {
-        return this.defaultListModel.getSize();
     }
 
     public void remove(int index) {

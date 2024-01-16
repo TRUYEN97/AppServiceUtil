@@ -1,0 +1,218 @@
+{
+  "Dhcp" : {
+    "leaseTime" : 600,
+    "macLength" : 17,
+    "netIP" : "172.168.0.251",
+    "on" : false
+  },
+  "Setting" : {
+    "column" : 8,
+    "line" : "MP",
+    "local_log" : "Log\\TestLog",
+    "product" : "Trieste",
+    "row" : 10,
+    "station" : "RUNIN",
+    "view" : "bigui"
+  },
+  "ErrorCode" : {
+    "dir" : "D:\\Maven-Project\\AmbitTest\\trieste_errorCode.txt"
+  },
+  "ItemTest" : {
+    "apply" : [ "Production", "Debug" ],
+    "config" : {
+      "limit" : "cd python && eero_api_limits_Trieste.py runin",
+      "modes" : {
+        "Production" : {
+          "group" : "init",
+          "loop" : 1,
+          "mode" : "production",
+          "password" : "123"
+        },
+        "Debug" : {
+          "group" : "test_debug",
+          "loop" : 1,
+          "mode" : "debug"
+        }
+      }
+    },
+    "groups" : {
+      "init" : {
+        "debug" : true,
+        "failColor" : [ 255, 0, 0 ],
+        "failedTo" : "test",
+        "items" : [ "CheckTime", "wps_ok" ],
+        "loop" : 1,
+        "passTo" : "test",
+        "testColor" : [ 255, 255, 0 ]
+      },
+      "test" : {
+        "begin" : 0,
+        "debug" : true,
+        "failColor" : [ 255, 0, 0 ],
+        "failedTo" : "",
+        "items" : [ ],
+        "loop" : 1,
+        "passTo" : "end",
+        "testColor" : [ 255, 255, 0 ]
+      },
+      "test_debug" : {
+        "debug" : true,
+        "failColor" : [ 255, 0, 0 ],
+        "failedTo" : "final",
+        "items" : [ ],
+        "loop" : 1,
+        "passTo" : "final",
+        "testColor" : [ 255, 255, 0 ]
+      },
+      "final" : {
+        "debug" : true,
+        "failColor" : [ 255, 0, 0 ],
+        "failedTo" : "",
+        "items" : [ "CheckTime", "wps_ok" ],
+        "loop" : 1,
+        "passTo" : "",
+        "testColor" : [ 255, 255, 0 ]
+      }
+    },
+    "items" : {
+      "CheckTime" : {
+        "bonus" : {
+          "timezone" : "UTC",
+          "wedUrl" : "http://10.90.100.15:8000/auth/login//"
+        },
+        "check_spec" : true,
+        "debugCancellCheckSpec" : false,
+        "debugCancellRun" : false,
+        "error_code" : "",
+        "fail_continue" : false,
+        "function" : "CheckTime",
+        "limit_type" : "BOOL",
+        "lower_limit" : "",
+        "multi" : false,
+        "required" : -1,
+        "retry" : 0,
+        "test_name" : "CheckTime",
+        "time_out" : 100,
+        "units" : "",
+        "upper_limit" : "",
+        "wait_multi_done" : false
+      },
+      "wps_ok" : {
+        "bonus" : {
+          "password" : "1234",
+          "Command" : [ "off", "on" ],
+          "Times" : 1,
+          "host" : "192.168.1.10",
+          "user" : "admin",
+          "Delay" : [ 5, 5 ]
+        },
+        "check_spec" : true,
+        "debugCancellCheckSpec" : false,
+        "debugCancellRun" : false,
+        "error_code" : "",
+        "fail_continue" : false,
+        "function" : "PowerSwitchFunc",
+        "limit_type" : "BOOL",
+        "lower_limit" : "",
+        "multi" : false,
+        "required" : -1,
+        "retry" : 0,
+        "test_name" : "wps_ok",
+        "time_out" : 30,
+        "units" : "",
+        "upper_limit" : "",
+        "wait_multi_done" : false
+      },
+      "dut_ping" : {
+        "bonus" : {
+          "IP" : "192.168.1.1",
+          "time_ping" : 120,
+          "type" : "check"
+        },
+        "check_spec" : true,
+        "debugCancellCheckSpec" : false,
+        "debugCancellRun" : false,
+        "error_code" : "",
+        "fail_continue" : false,
+        "function" : "Dutping",
+        "limit_type" : "BOOL",
+        "lower_limit" : "",
+        "multi" : false,
+        "required" : -1,
+        "retry" : 1,
+        "test_name" : "dut_ping",
+        "time_out" : 140,
+        "units" : "",
+        "upper_limit" : "",
+        "wait_multi_done" : false
+      },
+      "mac_ok" : {
+        "bonus" : {
+          "compare" : "ethernetmac",
+          "IP" : "192.168.1.1",
+          "Startkey" : "mac=",
+          "Time" : 40,
+          "type" : "telnet",
+          "ReadUntil" : "root@eero-test:/#",
+          "command" : "fw_printenv  mac"
+        },
+        "check_spec" : true,
+        "debugCancellCheckSpec" : true,
+        "debugCancellRun" : false,
+        "error_code" : "",
+        "fail_continue" : false,
+        "function" : "CheckDutCompare",
+        "limit_type" : "BOOL",
+        "lower_limit" : "",
+        "multi" : false,
+        "required" : -1,
+        "retry" : 2,
+        "test_name" : "mac_ok",
+        "time_out" : 60,
+        "units" : "",
+        "upper_limit" : "",
+        "wait_multi_done" : false
+      },
+      "dut_telnet" : {
+        "bonus" : {
+          "IP" : "192.168.1.1"
+        },
+        "check_spec" : true,
+        "debugCancellCheckSpec" : false,
+        "debugCancellRun" : false,
+        "error_code" : "",
+        "fail_continue" : false,
+        "function" : "DutTelnet",
+        "limit_type" : "BOOL",
+        "lower_limit" : "",
+        "multi" : false,
+        "required" : -1,
+        "retry" : 1,
+        "test_name" : "dut_telnet",
+        "time_out" : 60,
+        "units" : "",
+        "upper_limit" : "",
+        "wait_multi_done" : false
+      }
+    },
+    "limits" : { }
+  },
+  "Socket" : {
+    "clients" : {
+      "store" : {
+        "flag" : true,
+        "host" : "127.0.0.1",
+        "port" : 6868
+      },
+      "camera" : {
+        "flag" : true,
+        "host" : "127.0.0.1",
+        "port" : 6026
+      }
+    },
+    "server" : {
+      "flag" : true,
+      "port" : 8686
+    }
+  }
+}

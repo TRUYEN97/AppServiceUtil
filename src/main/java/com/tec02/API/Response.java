@@ -22,6 +22,7 @@ public class Response {
     public static final String MESSAGE = "message";
     public static final String DATA = "data";
     public static final String RESULT = "result";
+    public static final String STATUS = "status";
     private JTextComponent textComponent;
 
     public Response(int code, String response) {
@@ -126,5 +127,12 @@ public class Response {
     public int getCode() {
         return code;
     }
+
+    @Override
+    public String toString() {
+        return getResponse();
+    }
+    
+    
 
 }
