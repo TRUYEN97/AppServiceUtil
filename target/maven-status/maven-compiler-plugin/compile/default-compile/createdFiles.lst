@@ -22,7 +22,6 @@ com\tec02\common\FileInfo$type.class
 com\tec02\Time\TimeBase.class
 com\tec02\communication\DHCP\DHCP.class
 com\tec02\communication\Communicate\IReadable.class
-com\tec02\user32\W32API.class
 com\tec02\communication\socket\Unicast\Server\ClientHandler.class
 com\tec02\API\RequestParam.class
 com\tec02\FileService\FileService.class
@@ -46,7 +45,6 @@ com\tec02\mylogger\MyLogger.class
 com\tec02\Jmodel\treeFile\TreeFolder$1.class
 com\tec02\SystemTray\MySystemTray.class
 com\tec02\FileService\Zip.class
-com\tec02\user32\W32API$2.class
 com\tec02\communication\Communicate\FtpClient\FtpGetConnection.class
 com\tec02\communication\socket\Unicast\commons\Interface\Idisconnect.class
 com\tec02\common\Util.class
@@ -68,7 +66,6 @@ com\tec02\Jmodel\Component\MyTable$4.class
 com\tec02\communication\socket\Unicast\Client\Client.class
 com\tec02\API\JsonBodyAPI.class
 com\tec02\FileService\MD5.class
-com\tec02\user32\W32API$1.class
 com\tec02\Jmodel\Component\MyListTabel$1.class
 com\tec02\Jmodel\Component\MyTable$1.class
 com\tec02\user32\User32.class
