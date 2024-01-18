@@ -10,6 +10,8 @@ import com.tec02.communication.Communicate.IReadStream;
 import com.tec02.communication.Communicate.ISender;
 import com.tec02.communication.Communicate.ReadStreamOverTime;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -46,8 +48,12 @@ public class Cmd extends AbsCommunicate implements ISender, IReadStream {
         }
     }
     
-    public int waitFor() throws InterruptedException{
-        return this.process.waitFor();
+    public int waitFor(){
+        try {
+            return this.process.waitFor();
+        } catch (InterruptedException ex) {
+            return -1;
+        }
     }
 
     public void destroy() {
