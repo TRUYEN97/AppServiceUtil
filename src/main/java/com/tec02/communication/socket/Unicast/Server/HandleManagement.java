@@ -7,6 +7,7 @@ package com.tec02.communication.socket.Unicast.Server;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -25,6 +26,10 @@ public class HandleManagement {
        if(old != null){
            old.disconnect();
        }
+    }
+    
+    public Set<String> getClientNames(){
+        return handlers.keySet();
     }
 
     public void disconnect(String name) {

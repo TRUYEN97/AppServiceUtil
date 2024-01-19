@@ -37,11 +37,19 @@ public class Client implements Runnable, Idisconnect, IIsConnect {
         this.clientReceiver = objectAnalysis;
         this.debug = false;
     }
-
+    
     public void setDebug(boolean debug) {
         this.debug = debug;
     }
 
+    public String getHost() {
+        return host;
+    }
+
+    public int getPort() {
+        return port;
+    }
+    
     public boolean connect() {
         try {
             this.socket = new Socket(host, port);
@@ -85,7 +93,7 @@ public class Client implements Runnable, Idisconnect, IIsConnect {
                     continue;
                 }
                 this.logger.addlog(SocketLogger.pointToPoint(host, Keywords.CLIENT), data);
-                this.clientReceiver.receiver(data);
+                this.clientReceiver.receiver(this, data);
             }
         } catch (Exception ex) {
             if (debug) {
