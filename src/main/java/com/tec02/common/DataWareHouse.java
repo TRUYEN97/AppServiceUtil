@@ -2,15 +2,18 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tec02.API;
+package com.tec02.common;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import static java.util.Objects.isNull;
+import java.util.Set;
+import java.util.function.Function;
 
 /**
  *
@@ -19,13 +22,20 @@ import static java.util.Objects.isNull;
 public class DataWareHouse {
 
     private final JSONObject coreData;
+    private final Map<String, Set<String>> keyMaps;
 
     public DataWareHouse() {
         this.coreData = new JSONObject();
+        this.keyMaps = new HashMap<>();
     }
 
     public DataWareHouse(JSONObject parseObject) {
         this.coreData = new JSONObject(parseObject);
+        this.keyMaps = new HashMap<>();
+    }
+
+    public void putkeyMap(String baseKey, String... mapKeys) {
+        this.keyMaps.put(baseKey, Set.of(mapKeys));
     }
 
     public boolean putAll(Map data) {
@@ -56,13 +66,15 @@ public class DataWareHouse {
     public String getString(String key) {
         if (coreData.containsKey(key)) {
             return coreData.getString(key);
+        } else {
+            return getWithMapkeys(key, (t) -> coreData.getString(key), null);
         }
-        return null;
     }
 
     public String[] getArrays(String key, String regex) {
-        if (coreData.containsKey(key)) {
-            String[] arr = coreData.getString(key).split(regex);
+        String val = coreData.getString(key);
+        if (val != null) {
+            String[] arr = val.split(regex);
             String[] newArr = new String[arr.length];
             for (int index = 0; index < arr.length; index++) {
                 newArr[index] = arr[index].trim();
@@ -87,8 +99,9 @@ public class DataWareHouse {
             Integer value = coreData.getInteger(key);
             if (value != null) {
                 return value;
+            } else {
+                return getWithMapkeys(key, (t) -> coreData.getInteger(key), Integer.valueOf(getString(key)));
             }
-            return Integer.parseInt(getString(key));
         } catch (NumberFormatException e) {
             return null;
         }
@@ -99,8 +112,11 @@ public class DataWareHouse {
             Double value = coreData.getDouble(key);
             if (value != null) {
                 return value;
+            } else {
+                return getWithMapkeys(key, (t) -> {
+                    return coreData.getDouble(key);
+                }, Double.valueOf(getString(key)));
             }
-            return Double.parseDouble(getString(key));
         } catch (NumberFormatException e) {
             return null;
         }
@@ -137,15 +153,30 @@ public class DataWareHouse {
         return Arrays.asList(getArrays(key, regex));
     }
 
-    public List<JSONObject> getListJson(String key) {
-        List<JSONObject> result = new ArrayList<>();
+    public <T> List<T> getList(String key) {
+        List<T> result = new ArrayList<>();
         var arr = coreData.getJSONArray(key);
         if (arr != null) {
             for (var object : arr) {
-                result.add((JSONObject) object);
+                result.add((T) object);
+            }
+        } else {
+            Set<String> vals;
+            for (String baseKey : keyMaps.keySet()) {
+                vals = keyMaps.get(baseKey);
+                if (this.coreData.containsKey(baseKey) && vals.contains(key)) {
+                    arr = coreData.getJSONArray(baseKey);
+                    for (var object : arr) {
+                        result.add((T) object);
+                    }
+                }
             }
         }
         return result;
+    }
+
+    public void clearkeyMaps() {
+        this.keyMaps.clear();
     }
 
     public void clear() {
@@ -157,8 +188,9 @@ public class DataWareHouse {
             Long value = coreData.getLong(key);
             if (value != null) {
                 return value;
+            } else {
+                return getWithMapkeys(key, (t) -> coreData.getLong(t), Long.valueOf(getString(key)));
             }
-            return Long.valueOf(getString(key));
         } catch (NumberFormatException e) {
             return null;
         }
@@ -166,7 +198,11 @@ public class DataWareHouse {
 
     public boolean getBoolean(String key, boolean defaultValue) {
         try {
-            return coreData.getBoolean(key);
+            if (coreData.containsKey(key)) {
+                return coreData.getBoolean(key);
+            } else {
+                return getWithMapkeys(key, (t) -> coreData.getBoolean(t), defaultValue);
+            }
         } catch (Exception e) {
             return defaultValue;
         }
@@ -177,11 +213,33 @@ public class DataWareHouse {
     }
 
     public Object get(String key) {
-        return coreData.get(key);
+        if (coreData.containsKey(key)) {
+            return coreData.get(key);
+        } else {
+            Set<String> value;
+            for (String baseKey : keyMaps.keySet()) {
+                value = keyMaps.get(baseKey);
+                if (this.coreData.containsKey(baseKey) && value.contains(key)) {
+                    return coreData.get(baseKey);
+                }
+            }
+        }
+        return null;
     }
 
     public String getString(String key, String defaultVal) {
         String val = getString(key);
         return val == null ? defaultVal : val;
+    }
+
+    private <T> T getWithMapkeys(String key, Function<String, T> function, T defaulVal) {
+        Set<String> vals;
+        for (String baseKey : keyMaps.keySet()) {
+            vals = keyMaps.get(baseKey);
+            if (this.coreData.containsKey(baseKey) && vals.contains(key)) {
+                return function.apply(baseKey);
+            }
+        }
+        return defaulVal;
     }
 }

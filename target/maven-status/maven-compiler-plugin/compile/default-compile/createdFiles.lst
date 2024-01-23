@@ -28,7 +28,6 @@ com\tec02\FileService\FileService.class
 com\tec02\API\RestAPI$1.class
 com\tec02\communication\DHCP\DhcpData.class
 com\tec02\communication\Communicate\ReadStreamOverTime.class
-com\tec02\API\DataWareHouse.class
 com\tec02\common\PcInformation.class
 com\tec02\gui\frameGui\Component\MyChooser.class
 com\tec02\communication\socket\Unicast\commons\Interface\IIsConnect.class
@@ -78,3 +77,4 @@ com\tec02\Time\WaitTime\Class\TimeMM.class
 com\tec02\communication\Communicate\IConnect.class
 com\tec02\communication\socket\Unicast\commons\SocketLogger.class
 com\tec02\API\Response.class
+com\tec02\common\DataWareHouse.class
