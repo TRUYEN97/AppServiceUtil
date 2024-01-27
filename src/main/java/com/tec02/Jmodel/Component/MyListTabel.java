@@ -12,6 +12,7 @@ import java.util.Enumeration;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
+import javax.swing.ListSelectionModel;
 
 /**
  *
@@ -24,48 +25,63 @@ public class MyListTabel<T> {
     private DefaultListModel<T> defaultListModel;
 
     public MyListTabel(JList<T> jList) {
+        this(jList, true, false);
+    }
+
+    public MyListTabel(JList<T> jList, boolean sortAble) {
+        this(jList, sortAble, false);
+    }
+
+    public MyListTabel(JList<T> jList, boolean sortAble, boolean singleSelection) {
         this.jList = jList;
         this.defaultListModel = new DefaultListModel<>();
         this.jList.setModel(defaultListModel);
-        this.jList.addMouseMotionListener(new MouseMotionListener() {
-            private int oldIndex = -1;
-            private Point oldPonit;
+        if (singleSelection) {
+            this.jList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        } else {
+            this.jList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        }
+        if (sortAble) {
+            this.jList.addMouseMotionListener(new MouseMotionListener() {
+                private int oldIndex = -1;
+                private Point oldPonit;
 
-            @Override
-            public void mouseDragged(MouseEvent e) {
-                int index = jList.getSelectedIndex();
-                Point point = e.getPoint();
-                if (index == -1 || oldPonit == null) {
+                @Override
+                public void mouseDragged(MouseEvent e) {
+                    int index = jList.getSelectedIndex();
+                    Point point = e.getPoint();
+                    if (index == -1 || oldPonit == null) {
+                        oldPonit = point;
+                        return;
+                    }
+                    int diff = point.y - oldPonit.y;
+                    int diffIndex = index - oldIndex;
                     oldPonit = point;
-                    return;
+                    int size = defaultListModel.getSize();
+                    if (diff == 0 || oldIndex == index) {
+                        return;
+                    } else if (diff < 0 && index < size - 1 && diffIndex == -1) {
+                        T oldIndexT = defaultListModel.getElementAt(index);
+                        T newIndexT = defaultListModel.getElementAt(index + 1);
+                        defaultListModel.setElementAt(newIndexT, index);
+                        defaultListModel.setElementAt(oldIndexT, index + 1);
+                    } else if (diff > 0 && index > 0 && diffIndex == 1) {
+                        T oldIndexT = defaultListModel.getElementAt(index);
+                        T newIndexT = defaultListModel.getElementAt(index - 1);
+                        defaultListModel.setElementAt(newIndexT, index);
+                        defaultListModel.setElementAt(oldIndexT, index - 1);
+                    }
+                    oldIndex = index;
                 }
-                int diff = point.y - oldPonit.y;
-                int diffIndex = index - oldIndex;
-                oldPonit = point;
-                int size = defaultListModel.getSize();
-                if (diff == 0 || oldIndex == index) {
-                    return;
-                } else if (diff < 0 && index < size - 1 && diffIndex == -1) {
-                    T oldIndexT = defaultListModel.getElementAt(index);
-                    T newIndexT = defaultListModel.getElementAt(index + 1);
-                    defaultListModel.setElementAt(newIndexT, index);
-                    defaultListModel.setElementAt(oldIndexT, index + 1);
-                } else if (diff > 0 && index > 0 && diffIndex == 1) {
-                    T oldIndexT = defaultListModel.getElementAt(index);
-                    T newIndexT = defaultListModel.getElementAt(index - 1);
-                    defaultListModel.setElementAt(newIndexT, index);
-                    defaultListModel.setElementAt(oldIndexT, index - 1);
-                }
-                oldIndex = index;
-            }
 
-            @Override
-            public void mouseMoved(MouseEvent e) {
-                if (e.getButton() == MouseEvent.NOBUTTON) {
-                    oldPonit = null;
+                @Override
+                public void mouseMoved(MouseEvent e) {
+                    if (e.getButton() == MouseEvent.NOBUTTON) {
+                        oldPonit = null;
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     public void addItem(T element) {
@@ -86,7 +102,7 @@ public class MyListTabel<T> {
     public void setItem(int index, T element) {
         this.defaultListModel.set(0, element);
     }
-    
+
     public void addItem(int index, T element) {
         this.defaultListModel.add(0, element);
     }
