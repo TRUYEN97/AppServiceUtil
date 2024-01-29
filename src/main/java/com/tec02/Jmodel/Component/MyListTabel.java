@@ -193,4 +193,8 @@ public class MyListTabel<T> {
         this.defaultListModel = model;
         this.jList.setModel(model);
     }
+
+    public void setSelected(T item) {
+        this.jList.setSelectedValue(item, true);
+    }
 }
