@@ -43,6 +43,7 @@ public class DHCP implements Runnable {
     private Thread thread;
     private final Arp arp;
     private final TimeBase timeBase;
+    private boolean running = false;
 
     private DHCP() {
         this.loger = new MyLogger();
@@ -100,11 +101,12 @@ public class DHCP implements Runnable {
     public void setLeaseTime(int leaseTime) {
         this.leaseTime = leaseTime;
     }
-    
+
     public boolean init() {
         if (leaseTime <= 0) {
             return false;
         }
+        running = false;
         DHCPPacket temp = new DHCPPacket();
         this.loger.setSaveMemory(true);
         this.macRequestLog.setSaveMemory(true);
@@ -126,6 +128,10 @@ public class DHCP implements Runnable {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public boolean isRunning() {
+        return running;
     }
 
     private boolean isNotHostAddress(String dhcpHost) {
@@ -153,10 +159,12 @@ public class DHCP implements Runnable {
 
     @Override
     public void run() {
+        running = false;
         try ( DatagramSocket socket = new DatagramSocket(DHCPConstants.BOOTP_REQUEST_PORT, host_Address)) {
             DatagramPacket pac = new DatagramPacket(new byte[1500], 1500);
             DHCPPacket dhcp;
             while (true) {
+                running = true;
                 socket.receive(pac);
                 dhcp = DHCPPacket.getPacket(pac);
                 String mac = bytesToHex(dhcp.getChaddr()).substring(0, 12);
@@ -203,6 +211,8 @@ public class DHCP implements Runnable {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, e.toString(), "Tip", JOptionPane.WARNING_MESSAGE);
             System.exit(0);
+        } finally {
+            running = false;
         }
     }
 
