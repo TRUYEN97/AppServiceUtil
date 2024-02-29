@@ -12,6 +12,8 @@ import java.io.Closeable;
  */
 public interface ISender extends Closeable{
     
+    boolean sendCtrl_C();
+    
     boolean sendCommand(String command, Object... params);
     
     boolean insertCommand(String command, Object... params);

@@ -40,7 +40,6 @@ public abstract class AbsCommunicate extends AbsShowException implements ISender
             this.input.setDebug(debug);
         }
     }
-    
 
     @Override
     public boolean sendCommand(String command, Object... params) {
@@ -49,9 +48,25 @@ public abstract class AbsCommunicate extends AbsShowException implements ISender
     }
 
     @Override
+    public boolean sendCtrl_C() {
+        try {
+            out.write(3);
+            out.flush();
+            return true;
+        } catch (Exception ex) {
+            showException(ex);
+            return false;
+        }
+    }
+
+    @Override
     public boolean insertCommand(String command, Object... params) {
         try {
-            out.println(String.format(command, params));
+            if (params.length == 0) {
+                out.println(command);
+            } else {
+                out.println(String.format(command, params));
+            }
             out.flush();
             return true;
         } catch (Exception ex) {
@@ -94,7 +109,7 @@ public abstract class AbsCommunicate extends AbsShowException implements ISender
     public StringBuffer getStringResult() {
         return this.input.getStringResult();
     }
-    
+
     protected abstract void closeThis() throws IOException;
 
     @Override
@@ -102,9 +117,13 @@ public abstract class AbsCommunicate extends AbsShowException implements ISender
         if (input != null) {
             input.close();
         }
-        if(out != null){
+        if (out != null) {
             out.close();
         }
         closeThis();
+    }
+
+    public String getName() {
+        return getClass().getSimpleName();
     }
 }

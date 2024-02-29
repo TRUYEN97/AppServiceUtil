@@ -4,8 +4,6 @@
  */
 package com.tec02.Jmodel.Component;
 
-import com.tec02.Jmodel.IAction;
-import java.awt.Component;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -23,23 +21,17 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Administrator
  */
-public class MyTable {
+public class MyTable extends AbsMenuAndAction<JTable>{
 
     private List<String> columns;
-    private final JTable table;
     private DefaultTableModel model;
-    private PopupMenu menu;
-    private PopupMenu selectedMenu;
-    private IAction<MouseEvent> doubleClickAction;
 
     public MyTable(JTable table) {
-        if (table == null) {
-            throw new NullPointerException("Table cannot be null");
-        }
+        super(table);
+        
         this.menu = new PopupMenu();
         this.selectedMenu = new PopupMenu();
-        this.table = table;
-        this.table.addMouseMotionListener(new MouseAdapter() {
+        this.component.addMouseMotionListener(new MouseAdapter() {
 
             @Override
             public void mouseMoved(MouseEvent e) {
@@ -52,79 +44,18 @@ public class MyTable {
                 }
             }
         });
-        this.table.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                mouseClickdAction(e);
-            }
-        });
-        Component parerent = this.table.getParent();
-        if (parerent != null) {
-            parerent.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    if (getSelectedRowCount() > 0 && !e.isControlDown()) {
-                        clearSelection();
-                    }
-                    mouseClickdAction(e);
-                }
-            });
-        }
     }
 
     public void setModeSelection(int selectionMode) {
-        this.table.setSelectionMode(selectionMode);
+        this.component.setSelectionMode(selectionMode);
     }
 
-    private void mouseClickdAction(MouseEvent e) {
-        if (e.getButton() == MouseEvent.BUTTON2) {
-            if (!e.isControlDown()) {
-                clearSelection();
-            }
-            return;
-        }
-        if (e.getClickCount() > 1 && e.getButton() == MouseEvent.BUTTON1
-                && getSelectedRowCount() == 1 && doubleClickAction != null) {
-            doubleClickAction.action(e);
-        } else if (e.getButton() == MouseEvent.BUTTON3) {
-            if (table.getSelectedRowCount() > 0 && selectedMenu != null && !selectedMenu.isEmpty()) {
-                selectedMenu.show(e);
-            } else if (menu != null && !menu.isEmpty()) {
-                menu.show(e);
-            }
-        }
-    }
-
-    public PopupMenu getSelectedMenu() {
-        return selectedMenu;
-    }
-
-    public void setSelectedMenu(PopupMenu selectedMenu) {
-        this.selectedMenu = selectedMenu;
-    }
-
-    public void setMenu(PopupMenu menu) {
-        this.menu = menu;
-    }
-
-    public PopupMenu getMenu() {
-        return menu;
-    }
+   
 
     public void initTable(Collection<String> cols) {
         initTable(cols, null, null);
     }
-
-    public void setDoubleClickAction(IAction<MouseEvent> doubleClickAction) {
-        this.doubleClickAction = doubleClickAction;
-    }
-
-    public void setMouseAdapter(MouseAdapter mouseAdapter) {
-        if (this.table == null) {
-            return;
-        }
-        this.table.addMouseListener(mouseAdapter);
-    }
+   
 
     public List<String> getColumns() {
         return columns;
@@ -148,10 +79,10 @@ public class MyTable {
                 return editables[columnIndex];
             }
         };
-        this.table.setModel(this.model);
-        this.table.getTableHeader().setReorderingAllowed(true);//
-        this.table.setShowGrid(true);
-        float onePercent = this.table.getWidth() / 100;
+        this.component.setModel(this.model);
+        this.component.getTableHeader().setReorderingAllowed(true);//
+        this.component.setShowGrid(true);
+        float onePercent = this.component.getWidth() / 100;
         int sizeLenth = sizes.length;
         for (int i = 0; i < cols.size(); i++) {
             int w = (int) (sizeLenth <= i ? (onePercent * sizes[sizeLenth - 1]) : (onePercent * sizes[i]));
@@ -163,7 +94,7 @@ public class MyTable {
         if (isNull(model)) {
             return -1;
         }
-        return this.table.getSelectedRow();
+        return this.component.getSelectedRow();
     }
 
     public int getColumnCount() {
@@ -173,18 +104,19 @@ public class MyTable {
         return this.model.getColumnCount();
     }
 
+    @Override
     public int getSelectedRowCount() {
-        if (isNull(table)) {
+        if (isNull(component)) {
             return 0;
         }
-        return this.table.getSelectedRowCount();
+        return this.component.getSelectedRowCount();
     }
 
     public int[] getSelectedRows() {
         if (isNull(model)) {
             return new int[]{};
         }
-        return this.table.getSelectedRows();
+        return this.component.getSelectedRows();
     }
 
     public void clear() {
@@ -211,15 +143,15 @@ public class MyTable {
     }
 
     public void addRow(Object[] row) {
-        if (isNull(model) || isNull(table)) {
+        if (isNull(model) || isNull(component)) {
             return;
         }
         if (row == null || row.length == 0) {
             return;
         }
         this.model.addRow(row);
-        this.table.revalidate();
-        this.table.repaint();
+        this.component.revalidate();
+        this.component.repaint();
     }
 
     public void addRow(Map<String, Object> values) {
@@ -288,12 +220,12 @@ public class MyTable {
     private void setPropertiesColumn(int index, int width, int alignment, int header) {
         DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
         renderer.setHorizontalAlignment(alignment);
-        this.table.getColumnModel().getColumn(index).setMinWidth(width);
-        this.table.getColumnModel().getColumn(index).setCellRenderer(renderer);
-        this.table.getColumnModel().getColumn(index).setResizable(true);
+        this.component.getColumnModel().getColumn(index).setMinWidth(width);
+        this.component.getColumnModel().getColumn(index).setCellRenderer(renderer);
+        this.component.getColumnModel().getColumn(index).setResizable(true);
         DefaultTableCellRenderer renderer1 = new DefaultTableCellRenderer();
         renderer1.setHorizontalTextPosition(header);
-        this.table.getColumnModel().getColumn(index).setHeaderRenderer(renderer);
+        this.component.getColumnModel().getColumn(index).setHeaderRenderer(renderer);
     }
 
     private boolean isNull(Object object) {
@@ -389,10 +321,10 @@ public class MyTable {
     }
 
     private int getSelectedColumn() {
-        if (isNull(model)) {
+        if (isNull(component)) {
             return -1;
         }
-        return this.table.getSelectedColumn();
+        return this.component.getSelectedColumn();
     }
 
     public CellValue getMapSelectedCell() {
@@ -441,12 +373,13 @@ public class MyTable {
         return getDataWithCoumns(columns, index);
     }
 
+    @Override
     public void clearSelection() {
-        table.clearSelection();
+        component.clearSelection();
     }
 
     public boolean isDataEmpty() {
-        return table.getRowCount() == 0;
+        return component.getRowCount() == 0;
     }
 
     public class CellValue {

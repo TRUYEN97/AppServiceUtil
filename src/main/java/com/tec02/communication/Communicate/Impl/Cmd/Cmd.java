@@ -10,8 +10,6 @@ import com.tec02.communication.Communicate.IReadStream;
 import com.tec02.communication.Communicate.ISender;
 import com.tec02.communication.Communicate.ReadStreamOverTime;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -37,7 +35,8 @@ public class Cmd extends AbsCommunicate implements ISender, IReadStream {
     @Override
     public boolean insertCommand(String command, Object... params) {
         destroy();
-        this.builder.command("cmd.exe", "/c", String.format(command, params));
+        String newCommand = params.length == 0 ? command : String.format(command, params);
+        this.builder.command("cmd.exe", "/c", newCommand);
         try {
             this.process = builder.start();
             this.input.setReader(process.getInputStream());
@@ -47,8 +46,8 @@ public class Cmd extends AbsCommunicate implements ISender, IReadStream {
             return false;
         }
     }
-    
-    public int waitFor(){
+
+    public int waitFor() {
         try {
             return this.process.waitFor();
         } catch (InterruptedException ex) {
@@ -63,7 +62,6 @@ public class Cmd extends AbsCommunicate implements ISender, IReadStream {
             showException(e);
         }
     }
-
 
     @Override
     protected void closeThis() throws IOException {

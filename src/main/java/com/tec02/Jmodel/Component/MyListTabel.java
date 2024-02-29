@@ -19,9 +19,8 @@ import javax.swing.ListSelectionModel;
  * @author Administrator
  * @param <T>
  */
-public class MyListTabel<T> {
+public class MyListTabel<T> extends AbsMenuAndAction<JList<T> >{
 
-    private final JList<T> jList;
     private DefaultListModel<T> defaultListModel;
 
     public MyListTabel(JList<T> jList) {
@@ -33,16 +32,16 @@ public class MyListTabel<T> {
     }
 
     public MyListTabel(JList<T> jList, boolean sortAble, boolean singleSelection) {
-        this.jList = jList;
+        super(jList);
         this.defaultListModel = new DefaultListModel<>();
-        this.jList.setModel(defaultListModel);
+        this.component.setModel(defaultListModel);
         if (singleSelection) {
-            this.jList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            this.component.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         } else {
-            this.jList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+            this.component.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         }
         if (sortAble) {
-            this.jList.addMouseMotionListener(new MouseMotionListener() {
+            this.component.addMouseMotionListener(new MouseMotionListener() {
                 private int oldIndex = -1;
                 private Point oldPonit;
 
@@ -145,11 +144,11 @@ public class MyListTabel<T> {
     }
 
     public T getSelectioned() {
-        return this.jList.getSelectedValue();
+        return this.component.getSelectedValue();
     }
 
     public List<T> getSelectedValuesList() {
-        return this.jList.getSelectedValuesList();
+        return this.component.getSelectedValuesList();
     }
 
     public List<T> removeItemSelecteds() {
@@ -166,12 +165,13 @@ public class MyListTabel<T> {
         return allItem;
     }
 
-    public int getSelectedCount() {
+    @Override
+    public int getSelectedRowCount() {
         return getSelectedValuesList().size();
     }
 
     public void remove(int index) {
-        this.jList.remove(index);
+        this.component.remove(index);
     }
 
     public void removeFirst() {
@@ -191,10 +191,16 @@ public class MyListTabel<T> {
 
     public void addModel(DefaultListModel<T> model) {
         this.defaultListModel = model;
-        this.jList.setModel(model);
+        this.component.setModel(model);
     }
 
     public void setSelected(T item) {
-        this.jList.setSelectedValue(item, true);
+        this.component.setSelectedValue(item, true);
     }
+
+    @Override
+    public void clearSelection() {
+        this.component.clearSelection();
+    }
+  
 }
