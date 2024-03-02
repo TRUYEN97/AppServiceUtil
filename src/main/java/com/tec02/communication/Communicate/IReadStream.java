@@ -8,7 +8,7 @@ package com.tec02.communication.Communicate;
  *
  * @author Administrator
  */
-public interface IReadStream extends IReadable{
+public interface IReadStream extends IReadable, IgetName{
     
     boolean setStreamReadable(AbsStreamReadable readable);
 }

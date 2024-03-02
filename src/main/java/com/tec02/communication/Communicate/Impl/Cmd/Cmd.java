@@ -21,9 +21,7 @@ public class Cmd extends AbsCommunicate implements ISender, IReadStream {
     private final ProcessBuilder builder;
 
     public Cmd() {
-        this.input = new ReadStreamOverTime();
-        this.builder = new ProcessBuilder();
-        this.builder.redirectErrorStream(true);
+        this(new ReadStreamOverTime());
     }
 
     public Cmd(AbsStreamReadable reader) {

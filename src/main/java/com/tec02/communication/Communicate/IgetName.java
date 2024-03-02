@@ -4,15 +4,10 @@
  */
 package com.tec02.communication.Communicate;
 
-import java.io.Closeable;
-
 /**
  *
  * @author Administrator
  */
-public interface IConnect extends Closeable, IgetName {
-
-    boolean connect(String pram1, int pram2);
-
-    boolean isConnect();
+public interface IgetName {
+    String getName();
 }

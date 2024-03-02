@@ -10,7 +10,7 @@ import com.tec02.Time.WaitTime.AbsTime;
  *
  * @author Administrator
  */
-public interface IReadable {
+public interface IReadable extends IgetName{
     
     StringBuffer getStringResult();
     

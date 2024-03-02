@@ -51,6 +51,7 @@ com\tec02\user32\Win32ProcessInfo.class
 com\tec02\API\FileInfo.class
 com\tec02\Time\WaitTime\Class\TimeH.class
 com\tec02\Robot\MyControl.class
+com\tec02\communication\Communicate\IgetName.class
 com\tec02\communication\socket\Unicast\Server\HandleManagement.class
 com\tec02\communication\Communicate\Impl\Telnet\Telnet.class
 com\tec02\Jmodel\Component\MyListTabel.class

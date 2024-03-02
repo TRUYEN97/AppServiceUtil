@@ -20,6 +20,7 @@ D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\SystemTray\MySystemTray.
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\common\PcInformation.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\DHCP\Arp.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\DHCP\DHCP.java
+D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\Communicate\IgetName.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\API\JsonBodyAPI.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\Jmodel\Component\MyChooser.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\common\MyObjectMapper.java

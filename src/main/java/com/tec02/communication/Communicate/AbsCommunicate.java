@@ -43,14 +43,16 @@ public abstract class AbsCommunicate extends AbsShowException implements ISender
 
     @Override
     public boolean sendCommand(String command, Object... params) {
-        input.clearResult();
+        if (input != null) {
+            input.clearResult();
+        }
         return insertCommand(command, params);
     }
 
     @Override
     public boolean sendCtrl_C() {
         try {
-            out.write(3);
+            out.println(3);
             out.flush();
             return true;
         } catch (Exception ex) {
@@ -61,6 +63,9 @@ public abstract class AbsCommunicate extends AbsShowException implements ISender
 
     @Override
     public boolean insertCommand(String command, Object... params) {
+        if (out == null) {
+            return false;
+        }
         try {
             if (params.length == 0) {
                 out.println(command);
@@ -77,36 +82,57 @@ public abstract class AbsCommunicate extends AbsShowException implements ISender
 
     @Override
     public String readLine() {
+        if (input == null) {
+            return null;
+        }
         return input.readLine();
     }
 
     @Override
     public String readAll() {
+        if (input == null) {
+            return null;
+        }
         return input.readAll();
     }
 
     @Override
     public String readAll(AbsTime tiker) {
+        if (input == null) {
+            return null;
+        }
         return input.readAll(tiker);
     }
 
     @Override
     public String readUntil(String... regex) {
+        if (input == null) {
+            return null;
+        }
         return input.readUntil(regex);
     }
 
     @Override
     public String readUntil(AbsTime tiker, String... regex) {
+        if (input == null) {
+            return null;
+        }
         return input.readUntil(tiker, regex);
     }
 
     @Override
     public String readLine(AbsTime tiker) {
+        if (input == null) {
+            return null;
+        }
         return input.readLine(tiker);
     }
 
     @Override
     public StringBuffer getStringResult() {
+        if (input == null) {
+            return null;
+        }
         return this.input.getStringResult();
     }
 
@@ -123,6 +149,7 @@ public abstract class AbsCommunicate extends AbsShowException implements ISender
         closeThis();
     }
 
+    @Override
     public String getName() {
         return getClass().getSimpleName();
     }

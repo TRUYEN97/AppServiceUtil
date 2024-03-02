@@ -35,6 +35,11 @@ public abstract class AbsStreamReadable extends AbsShowException implements IRea
         }
     }
 
+    @Override
+    public String getName() {
+        return getClass().getSimpleName();
+    }
+    
     public void setReader(InputStream reader) {
         this.reader = reader;
     }
