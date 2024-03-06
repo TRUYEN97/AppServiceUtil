@@ -10,6 +10,7 @@ import com.tec02.communication.Communicate.IReadStream;
 import com.tec02.communication.Communicate.ISender;
 import com.tec02.communication.Communicate.ReadStreamOverTime;
 import java.io.IOException;
+import java.io.PrintStream;
 
 /**
  *
@@ -25,6 +26,9 @@ public class Cmd extends AbsCommunicate implements ISender, IReadStream {
     }
 
     public Cmd(AbsStreamReadable reader) {
+        if(reader == null){
+            throw new NullPointerException("StreamReader == null");
+        }
         this.input = reader;
         this.builder = new ProcessBuilder();
         this.builder.redirectErrorStream(true);
@@ -38,6 +42,7 @@ public class Cmd extends AbsCommunicate implements ISender, IReadStream {
         try {
             this.process = builder.start();
             this.input.setReader(process.getInputStream());
+            this.out = new PrintStream(process.getOutputStream());
             return true;
         } catch (IOException ex) {
             showException(ex);

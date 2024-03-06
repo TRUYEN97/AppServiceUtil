@@ -52,7 +52,8 @@ public abstract class AbsCommunicate extends AbsShowException implements ISender
     @Override
     public boolean sendCtrl_C() {
         try {
-            out.println(3);
+            char ctrlC = 99 & 0X1F;
+            out.println(ctrlC);
             out.flush();
             return true;
         } catch (Exception ex) {
