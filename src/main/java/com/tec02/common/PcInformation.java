@@ -16,7 +16,6 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 /**
  *
@@ -26,11 +25,8 @@ public class PcInformation {
 
     private static volatile PcInformation instance;
     private Map<String, List<String>> networkInfomation;
-    private final String pc_name;
 
     private PcInformation() {
-        this.networkInfomation = scanHostIp();
-        this.pc_name = getComputerName();
     }
 
     public static PcInformation getInstance() {
@@ -45,10 +41,10 @@ public class PcInformation {
         }
         return ins;
     }
-    
-    public boolean isChanged(){
+
+    public boolean isChanged() {
         var nwi = scanHostIp();
-        if(nwi.equals(this.networkInfomation)){
+        if (this.networkInfomation != null && nwi.equals(this.networkInfomation)) {
             return false;
         }
         this.networkInfomation = nwi;
@@ -56,10 +52,11 @@ public class PcInformation {
     }
 
     public String getPcName() {
-        return pc_name;
+        return getComputerName();
     }
 
     public List<String> getIps() {
+        isChanged();
         List<String> rs = new ArrayList<>();
         for (List<String> ips : networkInfomation.values()) {
             rs.addAll(ips);
@@ -68,10 +65,12 @@ public class PcInformation {
     }
 
     public Collection<String> getMacs() {
+        isChanged();
         return networkInfomation.keySet();
     }
 
     public Map<String, List<String>> getNetworkInfomation() {
+        isChanged();
         return networkInfomation;
     }
 
@@ -108,7 +107,7 @@ public class PcInformation {
         return networkInfo;
     }
 
-    private String getComputerName() {
+    public String getComputerName() {
         String os = getSystemName();
         if (os.startsWith("Windows")) {
             return getWindowsHostName();
@@ -130,15 +129,19 @@ public class PcInformation {
         }
     }
 
+    public boolean isWindowsOs() {
+        String os = getSystemName();
+        return os != null && os.trim().startsWith("Windows");
+    }
+
     private String getMacHostName() {
-        Cmd cmd1 = new Cmd();
+        Cmd cmd1 = new Cmd(isWindowsOs());
         cmd1.sendCommand("networksetup -getcomputername");
         return cmd1.readAll();
     }
 
     public String getSystemName() {
-        Properties sysProperty = System.getProperties();
-        return sysProperty.getProperty("os.name");
+        return System.getProperty("os.name");
     }
 
 }

@@ -42,7 +42,7 @@ public abstract class AbsCommunicate extends AbsShowException implements ISender
     }
 
     @Override
-    public boolean sendCommand(String command, Object... params) {
+    public synchronized boolean sendCommand(String command, Object... params) {
         if (input != null) {
             input.clearResult();
         }
@@ -50,10 +50,10 @@ public abstract class AbsCommunicate extends AbsShowException implements ISender
     }
 
     @Override
-    public boolean sendCtrl_C() {
+    public synchronized boolean sendCtrl_C() {
         try {
             char ctrlC = 99 & 0X1F;
-            out.println(ctrlC);
+            out.print(ctrlC);
             out.flush();
             return true;
         } catch (Exception ex) {
@@ -63,7 +63,7 @@ public abstract class AbsCommunicate extends AbsShowException implements ISender
     }
 
     @Override
-    public boolean insertCommand(String command, Object... params) {
+    public synchronized boolean insertCommand(String command, Object... params) {
         if (out == null) {
             return false;
         }
@@ -141,13 +141,13 @@ public abstract class AbsCommunicate extends AbsShowException implements ISender
 
     @Override
     public void close() throws IOException {
+        closeThis();
         if (input != null) {
             input.close();
         }
         if (out != null) {
             out.close();
         }
-        closeThis();
     }
 
     @Override

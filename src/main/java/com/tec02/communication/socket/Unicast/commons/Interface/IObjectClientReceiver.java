@@ -4,7 +4,7 @@
  */
 package com.tec02.communication.socket.Unicast.commons.Interface;
 
-import com.tec02.communication.socket.Unicast.Client.Client;
+import com.tec02.communication.socket.Unicast.Client.SocketClient;
 
 
 /**
@@ -13,5 +13,5 @@ import com.tec02.communication.socket.Unicast.Client.Client;
  */
 public interface IObjectClientReceiver {
     
-    void receiver(Client client, String data);
+    void receiver(SocketClient client, String data);
 }

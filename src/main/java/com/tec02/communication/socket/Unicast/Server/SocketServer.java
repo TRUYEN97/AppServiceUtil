@@ -17,7 +17,7 @@ import java.util.concurrent.Executors;
  *
  * @author Administrator
  */
-public class Server extends Thread {
+public class SocketServer extends Thread {
 
     private final ServerSocket serverSocket;
     private final HandleManagement handlerManager;
@@ -28,11 +28,11 @@ public class Server extends Thread {
     private int poolLimit;
     private boolean debug;
 
-    public Server(int port, IObjectServerReceiver receiver) throws Exception {
+    public SocketServer(int port, IObjectServerReceiver receiver) throws Exception {
         this(port, null, receiver);
     }
 
-    public Server(int port, IFilter filter, IObjectServerReceiver receiver) throws Exception {
+    public SocketServer(int port, IFilter filter, IObjectServerReceiver receiver) throws Exception {
         this.serverSocket = new ServerSocket(port);
         this.handlerManager = new HandleManagement();
         this.filter = filter;

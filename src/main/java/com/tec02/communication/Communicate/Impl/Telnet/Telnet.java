@@ -24,8 +24,7 @@ public class Telnet extends AbsCommunicate implements ISender, IReadStream, ICon
     private String host;
 
     public Telnet() {
-        this.telnet = new TelnetClient();
-        this.input = new ReadStream();
+        this(new ReadStream());
     }
 
     public Telnet(AbsStreamReadable readable) {
@@ -35,19 +34,25 @@ public class Telnet extends AbsCommunicate implements ISender, IReadStream, ICon
 
     @Override
     public boolean connect(String host, int port) {
-        try {
-            telnet.connect(host, port);
-            if (telnet.isConnected()) {
-                input.setReader(telnet.getInputStream());
-                out = new PrintStream(telnet.getOutputStream());
-                this.host = host;
-                return true;
+        for (int i = 0; i < 10; i++) {
+            try {
+                telnet.connect(host, port);
+                if (telnet.isConnected()) {
+                    input.setReader(telnet.getInputStream());
+                    out = new PrintStream(telnet.getOutputStream());
+                    this.host = host;
+                    return true;
+                }
+            } catch (Exception ex) {
+                showException(ex);
             }
-            return false;
-        } catch (Exception ex) {
-            showException(ex);
-            return false;
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException ex) {
+            }
         }
+        return false;
+
     }
 
     public int getPort() {

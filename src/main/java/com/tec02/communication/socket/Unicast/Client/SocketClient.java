@@ -18,7 +18,7 @@ import com.tec02.communication.socket.Unicast.commons.SocketLogger;
  *
  * @author Administrator
  */
-public class Client implements Runnable, Idisconnect, IIsConnect {
+public class SocketClient implements Runnable, Idisconnect, IIsConnect {
 
     private final String host;
     private final int port;
@@ -30,7 +30,7 @@ public class Client implements Runnable, Idisconnect, IIsConnect {
     private boolean connect;
     private boolean debug;
 
-    public Client(String host, int port, IObjectClientReceiver objectAnalysis) {
+    public SocketClient(String host, int port, IObjectClientReceiver objectAnalysis) {
         this.host = host;
         this.port = port;
         this.logger = new SocketLogger("log/socket/client");

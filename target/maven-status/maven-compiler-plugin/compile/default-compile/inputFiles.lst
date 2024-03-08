@@ -14,6 +14,7 @@ D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\Communicat
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\socket\Unicast\commons\Keywords.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\API\Response.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\Communicate\AbsStreamReadable.java
+D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\socket\Unicast\Client\SocketClient.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\Communicate\IReadable.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\socket\CommonsClass\IOServeice.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\SystemTray\MySystemTray.java
@@ -26,7 +27,6 @@ D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\Jmodel\Component\MyChoos
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\common\MyObjectMapper.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\user32\User32Util.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\Time\WaitTime\Class\TimeS.java
-D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\socket\Unicast\Server\Server.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\Communicate\ReadStream.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\socket\Unicast\commons\Interface\IObjectClientReceiver.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\FileService\MD5.java
@@ -34,7 +34,6 @@ D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\Jmodel\Component\AbsMenu
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\Jmodel\Component\MyTable.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\Communicate\IConnect.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\common\Util.java
-D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\socket\Unicast\Client\Client.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\Time\WaitTime\Class\TimeH.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\Communicate\Impl\Telnet\Telnet.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\Communicate\AbsShowException.java
@@ -49,6 +48,7 @@ D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\API\FileInfo.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\Robot\MyRobot.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\Time\TimeBase.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\socket\Unicast\commons\Interface\IFilter.java
+D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\socket\Unicast\Server\SocketServer.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\Jmodel\Component\PopupMenu.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\Communicate\AbsCommunicate.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\socket\Unicast\Server\ClientHandler.java

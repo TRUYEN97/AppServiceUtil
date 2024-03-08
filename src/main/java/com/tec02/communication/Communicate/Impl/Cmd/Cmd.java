@@ -4,6 +4,7 @@
  */
 package com.tec02.communication.Communicate.Impl.Cmd;
 
+import com.tec02.common.PcInformation;
 import com.tec02.communication.Communicate.AbsCommunicate;
 import com.tec02.communication.Communicate.AbsStreamReadable;
 import com.tec02.communication.Communicate.IReadStream;
@@ -20,15 +21,29 @@ public class Cmd extends AbsCommunicate implements ISender, IReadStream {
 
     private Process process;
     private final ProcessBuilder builder;
+    private final boolean isWindowsOs;
 
     public Cmd() {
-        this(new ReadStreamOverTime());
+        this(new ReadStreamOverTime(), PcInformation.getInstance().isWindowsOs());
+    }
+
+    public Cmd(boolean isWindowsOs) {
+        this(new ReadStreamOverTime(), isWindowsOs);
+    }
+
+    public boolean isWindowsOs() {
+        return isWindowsOs;
     }
 
     public Cmd(AbsStreamReadable reader) {
-        if(reader == null){
+        this(reader, true);
+    }
+
+    public Cmd(AbsStreamReadable reader, boolean isWindowsOs) {
+        if (reader == null) {
             throw new NullPointerException("StreamReader == null");
         }
+        this.isWindowsOs = isWindowsOs;
         this.input = reader;
         this.builder = new ProcessBuilder();
         this.builder.redirectErrorStream(true);
@@ -38,7 +53,11 @@ public class Cmd extends AbsCommunicate implements ISender, IReadStream {
     public boolean insertCommand(String command, Object... params) {
         destroy();
         String newCommand = params.length == 0 ? command : String.format(command, params);
-        this.builder.command("cmd.exe", "/c", newCommand);
+        if (isWindowsOs) {
+            this.builder.command("cmd.exe", "/c", newCommand);
+        } else {
+            this.builder.command(newCommand);
+        }
         try {
             this.process = builder.start();
             this.input.setReader(process.getInputStream());

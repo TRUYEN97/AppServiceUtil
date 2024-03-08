@@ -20,11 +20,11 @@ public abstract class AbsStreamReadable extends AbsShowException implements IRea
     private StringBuffer stringResult;
 
     protected AbsStreamReadable() {
-        this.stringResult = new StringBuffer();
+        this(null);
     }
 
     protected AbsStreamReadable(InputStream reader) {
-        this();
+        this.stringResult = new StringBuffer();
         this.reader = reader;
     }
 
@@ -39,7 +39,7 @@ public abstract class AbsStreamReadable extends AbsShowException implements IRea
     public String getName() {
         return getClass().getSimpleName();
     }
-    
+
     public void setReader(InputStream reader) {
         this.reader = reader;
     }
@@ -79,7 +79,7 @@ public abstract class AbsStreamReadable extends AbsShowException implements IRea
             return null;
         }
     }
-    
+
     @Override
     public StringBuffer getStringResult() {
         return stringResult;
