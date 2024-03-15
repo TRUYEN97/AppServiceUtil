@@ -11,5 +11,6 @@ package com.tec02.communication.socket.Unicast.commons;
 public final class Keywords {
     public static final String SERVER = "Server";
     public static final String CLIENT = "Client";
+    public static final String THIS = "This";
     public static final String ERROR = "error";
 }

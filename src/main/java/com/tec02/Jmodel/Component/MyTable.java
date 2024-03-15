@@ -21,14 +21,14 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Administrator
  */
-public class MyTable extends AbsMenuAndAction<JTable>{
+public class MyTable extends AbsMenuAndAction<JTable> {
 
     private List<String> columns;
     private DefaultTableModel model;
 
     public MyTable(JTable table) {
         super(table);
-        
+
         this.menu = new PopupMenu();
         this.selectedMenu = new PopupMenu();
         this.component.addMouseMotionListener(new MouseAdapter() {
@@ -50,12 +50,9 @@ public class MyTable extends AbsMenuAndAction<JTable>{
         this.component.setSelectionMode(selectionMode);
     }
 
-   
-
     public void initTable(Collection<String> cols) {
         initTable(cols, null, null);
     }
-   
 
     public List<String> getColumns() {
         return columns;

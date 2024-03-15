@@ -4,6 +4,7 @@
  */
 package com.tec02.communication.socket.Unicast.Client;
 
+import com.tec02.communication.socket.Unicast.commons.ClientLogger;
 import com.tec02.communication.socket.Unicast.commons.Interface.IIsConnect;
 import java.net.Socket;
 import com.tec02.communication.socket.Unicast.commons.Interface.Idisconnect;
@@ -12,7 +13,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import com.tec02.communication.socket.Unicast.commons.Interface.IObjectClientReceiver;
-import com.tec02.communication.socket.Unicast.commons.SocketLogger;
 
 /**
  *
@@ -21,9 +21,10 @@ import com.tec02.communication.socket.Unicast.commons.SocketLogger;
 public class SocketClient implements Runnable, Idisconnect, IIsConnect {
 
     private final String host;
+    private final String hostName;
     private final int port;
     private final IObjectClientReceiver clientReceiver;
-    private final SocketLogger logger;
+    private final ClientLogger logger;
     private Socket socket;
     private PrintWriter outputStream;
     private BufferedReader inputStream;
@@ -31,13 +32,18 @@ public class SocketClient implements Runnable, Idisconnect, IIsConnect {
     private boolean debug;
 
     public SocketClient(String host, int port, IObjectClientReceiver objectAnalysis) {
+        this(host, Keywords.SERVER, port, objectAnalysis);
+    }
+
+    public SocketClient(String hostName, String host, int port, IObjectClientReceiver objectAnalysis) {
         this.host = host;
+        this.hostName = hostName;
         this.port = port;
-        this.logger = new SocketLogger("log/socket/client");
+        this.logger = new ClientLogger("log/socket/client", host, hostName, port);
         this.clientReceiver = objectAnalysis;
         this.debug = false;
     }
-    
+
     public void setDebug(boolean debug) {
         this.debug = debug;
     }
@@ -49,13 +55,13 @@ public class SocketClient implements Runnable, Idisconnect, IIsConnect {
     public int getPort() {
         return port;
     }
-    
+
     public boolean connect() {
         try {
             this.socket = new Socket(host, port);
             this.outputStream = new PrintWriter(socket.getOutputStream(), true);
             this.inputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            this.logger.addlog(Keywords.CLIENT, "Connect to host: %s, port: %s", host, port);
+            this.logger.logConnected();
             this.connect = true;
             return true;
         } catch (Exception ex) {
@@ -73,7 +79,7 @@ public class SocketClient implements Runnable, Idisconnect, IIsConnect {
                 return false;
             }
             this.outputStream.println(data);
-            this.logger.addlog(SocketLogger.pointToPoint(Keywords.CLIENT, host), data);
+            this.logger.logSend(data);
             return true;
         } catch (Exception e) {
             if (debug) {
@@ -92,7 +98,7 @@ public class SocketClient implements Runnable, Idisconnect, IIsConnect {
                 if (data.trim().isBlank()) {
                     continue;
                 }
-                this.logger.addlog(SocketLogger.pointToPoint(host, Keywords.CLIENT), data);
+                this.logger.logReceived(data);
                 this.clientReceiver.receiver(this, data);
             }
         } catch (Exception ex) {
@@ -112,7 +118,7 @@ public class SocketClient implements Runnable, Idisconnect, IIsConnect {
 
     @Override
     public boolean disconnect() {
-        if(!isConnect()){
+        if (!isConnect()) {
             return true;
         }
         try {
@@ -129,7 +135,7 @@ public class SocketClient implements Runnable, Idisconnect, IIsConnect {
                 outputStream = null;
             }
             connect = false;
-            this.logger.addlog(host, "disconnected!");
+            this.logger.logDisconnect();
             return true;
         } catch (Exception e) {
             if (debug) {

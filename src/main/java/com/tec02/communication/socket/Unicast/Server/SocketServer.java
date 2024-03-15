@@ -7,7 +7,7 @@ package com.tec02.communication.socket.Unicast.Server;
 import com.tec02.communication.socket.Unicast.commons.Keywords;
 import com.tec02.communication.socket.Unicast.commons.Interface.IFilter;
 import com.tec02.communication.socket.Unicast.commons.Interface.IObjectServerReceiver;
-import com.tec02.communication.socket.Unicast.commons.SocketLogger;
+import com.tec02.communication.socket.Unicast.commons.ServerLogger;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
@@ -24,7 +24,7 @@ public class SocketServer extends Thread {
     private final IFilter filter;
     private final IObjectServerReceiver receiver;
     private final ExecutorService threadpool;
-    private final SocketLogger logger;
+    private final ServerLogger logger;
     private int poolLimit;
     private boolean debug;
 
@@ -39,7 +39,7 @@ public class SocketServer extends Thread {
         this.receiver = receiver;
         this.threadpool = Executors.newCachedThreadPool();
         this.poolLimit = Integer.MAX_VALUE;
-        this.logger = new SocketLogger("log/socket/server");
+        this.logger = new ServerLogger("log/socket/server", Keywords.SERVER, port);
         this.logger.addlog(Keywords.SERVER, "Listen on port: %s", port);
         this.debug = false;
     }
@@ -103,7 +103,7 @@ public class SocketServer extends Thread {
         try {
             return new ClientHandler(socket, logger, handlerManager);
         } catch (Exception e) {
-           if (debug) {
+            if (debug) {
                 e.printStackTrace();
                 this.logger.addlog("ERROR", e.getLocalizedMessage());
             }

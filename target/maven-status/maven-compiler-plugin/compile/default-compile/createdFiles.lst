@@ -5,6 +5,7 @@ com\tec02\Jmodel\Component\AbsMenuAndAction$2.class
 com\tec02\Time\WaitTime\Class\TimeMs.class
 com\tec02\communication\Communicate\AbsStreamReadable.class
 com\tec02\common\CSVcreater.class
+com\tec02\communication\socket\Unicast\commons\ClientLogger.class
 com\tec02\API\FileInfo$type.class
 com\tec02\API\RestAPI$CreatePath.class
 com\tec02\SystemTray\MySystemTray$1.class
@@ -13,6 +14,7 @@ com\tec02\communication\socket\Unicast\commons\Interface\IObjectServerReceiver.c
 com\tec02\communication\Communicate\Impl\Comport\ComPort.class
 com\tec02\Jmodel\Component\MyTable$2.class
 com\tec02\common\FileInfo.class
+com\tec02\communication\socket\Unicast\commons\ServerLogger.class
 com\tec02\communication\Communicate\IReadStream.class
 com\tec02\communication\DHCP\MacUtil.class
 com\tec02\communication\socket\Unicast\commons\Keywords.class

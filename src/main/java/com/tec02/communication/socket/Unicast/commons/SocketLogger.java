@@ -24,12 +24,8 @@ public class SocketLogger {
         this.timeBase = new TimeBase();
         this.path = path;
     }
-    
-    public static String pointToPoint(String from, String to){
-        return String.format("%s -> %s", from,to);
-    }
 
-    public synchronized boolean addlog(String key, String str, Object... params){
+    public synchronized boolean addlog(String key, String str, Object... params) {
         String logPath = String.format("%s/%s.txt", this.path, this.timeBase.getDate());
         this.loger.setFile(new File(logPath));
         try {

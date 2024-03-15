@@ -10,6 +10,7 @@ D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\API\JwtUtil.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\common\DataWareHouse.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\user32\User32.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\mylogger\MyLogger.java
+D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\socket\Unicast\commons\ServerLogger.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\Communicate\Impl\FtpClient\FtpClient.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\socket\Unicast\commons\Keywords.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\API\Response.java
@@ -53,6 +54,7 @@ D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\Jmodel\Component\PopupMe
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\Communicate\AbsCommunicate.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\socket\Unicast\Server\ClientHandler.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\Jmodel\Component\MyListTabel.java
+D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\socket\Unicast\commons\ClientLogger.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\Time\WaitTime\Class\TimeMM.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\Time\WaitTime\Class\TimeMs.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\Communicate\FtpClient\FtpGetConnection.java

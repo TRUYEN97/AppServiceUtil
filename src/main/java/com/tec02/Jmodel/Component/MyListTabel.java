@@ -19,7 +19,7 @@ import javax.swing.ListSelectionModel;
  * @author Administrator
  * @param <T>
  */
-public class MyListTabel<T> extends AbsMenuAndAction<JList<T> >{
+public class MyListTabel<T> extends AbsMenuAndAction<JList<T>> {
 
     private DefaultListModel<T> defaultListModel;
 
@@ -201,6 +201,7 @@ public class MyListTabel<T> extends AbsMenuAndAction<JList<T> >{
     @Override
     public void clearSelection() {
         this.component.clearSelection();
+        this.component.validate();
     }
-  
+
 }

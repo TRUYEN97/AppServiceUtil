@@ -12,6 +12,7 @@ import com.tec02.communication.socket.Unicast.commons.Interface.Idisconnect;
 import com.tec02.communication.socket.Unicast.commons.Keywords;
 import com.tec02.communication.socket.Unicast.commons.Interface.IFilter;
 import com.tec02.communication.socket.Unicast.commons.Interface.IObjectServerReceiver;
+import com.tec02.communication.socket.Unicast.commons.ServerLogger;
 import com.tec02.communication.socket.Unicast.commons.SocketLogger;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -27,7 +28,7 @@ public class ClientHandler implements Runnable, Idisconnect, IIsConnect {
     private final PrintWriter outputStream;
     private final BufferedReader inputStream;
     private final HandleManagement handlerManager;
-    private final SocketLogger logger;
+    private final ServerLogger logger;
     private IObjectServerReceiver objectAnalysis;
     private IFilter filter;
     private boolean connect;
@@ -35,15 +36,16 @@ public class ClientHandler implements Runnable, Idisconnect, IIsConnect {
     private static long number = 0;
     private String name;
 
-    public ClientHandler(Socket socket, SocketLogger logger, HandleManagement handlerManager) throws IOException {
+    public ClientHandler(Socket socket, ServerLogger logger, HandleManagement handlerManager) throws IOException {
         this.socket = socket;
         this.logger = logger;
         this.outputStream = new PrintWriter(socket.getOutputStream(), true);
         this.inputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         this.connect = true;
         this.handlerManager = handlerManager;
-        this.name = String.format("Client-%s", ClientHandler.number++);
-        this.logger.addlog(Keywords.SERVER, "%s connected! - ip: %s", name, this.socket.getLocalSocketAddress());
+        this.name = String.format("Client-%s(%s)", ClientHandler.number++,
+                socket.getLocalSocketAddress());
+        this.logger.logConnected(name);
     }
 
     public void setDebug(boolean debug) {
@@ -94,7 +96,7 @@ public class ClientHandler implements Runnable, Idisconnect, IIsConnect {
                     if (data.trim().isBlank()) {
                         continue;
                     }
-                    this.logger.addlog(SocketLogger.pointToPoint(name, Keywords.SERVER), data);
+                    this.logger.logReceived(name, data);
                     this.objectAnalysis.receiver(this, data);
                 }
             }
@@ -134,7 +136,7 @@ public class ClientHandler implements Runnable, Idisconnect, IIsConnect {
                 return false;
             }
             this.outputStream.println(data);
-            this.logger.addlog(SocketLogger.pointToPoint(Keywords.SERVER, name), data);
+            this.logger.logSend(name, data);
             return true;
         } catch (Exception e) {
             if (debug) {
