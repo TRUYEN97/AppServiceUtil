@@ -44,6 +44,10 @@ public class SocketClient implements Runnable, Idisconnect, IIsConnect {
         this.debug = false;
     }
 
+    public String getHostName() {
+        return hostName;
+    }
+
     public void setDebug(boolean debug) {
         this.debug = debug;
     }
