@@ -57,6 +57,7 @@ com\tec02\communication\Communicate\IgetName.class
 com\tec02\communication\socket\Unicast\Server\HandleManagement.class
 com\tec02\communication\Communicate\Impl\Telnet\Telnet.class
 com\tec02\Jmodel\Component\MyListTabel.class
+com\tec02\Jmodel\Component\PopupMenu$itemInfo.class
 com\tec02\user32\User32Util.class
 com\tec02\Jmodel\treeFile\TreeFolder.class
 com\tec02\communication\Communicate\Impl\FtpClient\FtpClient.class

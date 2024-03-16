@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.Action;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
@@ -21,30 +22,19 @@ import javax.swing.JPopupMenu;
 public class PopupMenu {
 
     private final JPopupMenu popupMenu;
-    private final List<JMenuItem> menuItems;
+    private final List<itemInfo> menuItems;
 
     public PopupMenu() {
         this.popupMenu = new JPopupMenu();
         this.menuItems = new ArrayList<>();
     }
 
-    public void addItemMenu(String itemName, ActionListener actionListener) {
-        JMenuItem itemMenu = new JMenuItem(itemName);
-        itemMenu.addActionListener(actionListener);
-        addItemMenu(itemMenu);
-    }
-
-    public void addItemMenu(JMenuItem itemMenu) {
-        this.menuItems.add(itemMenu);
-        this.popupMenu.add(itemMenu);
-    }
-
     public void addMenu(PopupMenu menu) {
         if (menu == null) {
             return;
         }
-        for (JMenuItem menuItem : menu.menuItems) {
-            addItemMenu(menuItem);
+        for (itemInfo menuItem : menu.menuItems) {
+            addItemMenu(menuItem.itemName, menuItem.actionListener, menuItem.icon);
         }
     }
 
@@ -52,7 +42,12 @@ public class PopupMenu {
         JMenuItem itemMenu = new JMenuItem(itemName);
         itemMenu.addActionListener(actionListener);
         itemMenu.setIcon(icon);
-        addItemMenu(itemMenu);
+        this.menuItems.add(new itemInfo(itemName, actionListener, icon));
+        this.popupMenu.add(itemMenu);
+    }
+
+    public void addItemMenu(String itemName, ActionListener actionListener) {
+        addItemMenu(itemName, actionListener, "");
     }
 
     public void addItemMenu(String itemName, ActionListener actionListener, String iconPath) {
@@ -69,5 +64,19 @@ public class PopupMenu {
 
     public boolean isEmpty() {
         return this.popupMenu.getComponentCount() == 0;
+    }
+
+    private class itemInfo {
+
+        private final String itemName;
+        private final ActionListener actionListener;
+        private final Icon icon;
+
+        public itemInfo(String itemName, ActionListener actionListener, Icon icon) {
+            this.itemName = itemName;
+            this.actionListener = actionListener;
+            this.icon = icon;
+        }
+
     }
 }
