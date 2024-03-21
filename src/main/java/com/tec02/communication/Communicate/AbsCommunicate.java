@@ -22,6 +22,13 @@ public abstract class AbsCommunicate extends AbsShowException implements ISender
     }
 
     @Override
+    public void stopRead() {
+        if (input != null) {
+            input.stopRead();
+        }
+    }
+
+    @Override
     public boolean setStreamReadable(AbsStreamReadable readable) {
         try {
             close();

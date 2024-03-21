@@ -18,6 +18,7 @@ public abstract class AbsStreamReadable extends AbsShowException implements IRea
     protected static final int MAX_TIME = Integer.MAX_VALUE;
     protected InputStream reader;
     private StringBuffer stringResult;
+    protected boolean stop = false;
 
     protected AbsStreamReadable() {
         this(null);
@@ -28,6 +29,11 @@ public abstract class AbsStreamReadable extends AbsShowException implements IRea
         this.reader = reader;
     }
 
+    @Override
+    public void stopRead() {
+        this.stop = true;
+    }
+    
     @Override
     public void close() throws IOException {
         if (reader != null) {
@@ -59,7 +65,8 @@ public abstract class AbsStreamReadable extends AbsShowException implements IRea
         try {
             StringBuffer result = new StringBuffer();
             char charIn;
-            while (tiker.onTime() && reader != null) {
+            stop = false;
+            while (!stop && tiker.onTime() && reader != null) {
                 if (reader.available() > 0) {
                     if ((charIn = (char) reader.read()) == -1) {
                         continue;

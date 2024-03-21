@@ -13,6 +13,7 @@ com\tec02\communication\Communicate\AbsShowException.class
 com\tec02\communication\socket\Unicast\commons\Interface\IObjectServerReceiver.class
 com\tec02\communication\Communicate\Impl\Comport\ComPort.class
 com\tec02\Jmodel\Component\MyTable$2.class
+com\tec02\Robot\AutoClickOnScreen.class
 com\tec02\common\FileInfo.class
 com\tec02\communication\socket\Unicast\commons\ServerLogger.class
 com\tec02\communication\Communicate\IReadStream.class
@@ -23,7 +24,9 @@ com\tec02\Jmodel\treeFile\TreeFolder$FileNode.class
 com\tec02\common\FileInfo$type.class
 com\tec02\Time\TimeBase.class
 com\tec02\communication\DHCP\DHCP.class
+com\tec02\opencv\MatchTemplate.class
 com\tec02\communication\Communicate\IReadable.class
+com\tec02\Jmodel\Component\AbsMenuAndAction$3.class
 com\tec02\communication\socket\Unicast\Server\ClientHandler.class
 com\tec02\API\RequestParam.class
 com\tec02\FileService\FileService.class
@@ -52,7 +55,6 @@ com\tec02\common\Util.class
 com\tec02\user32\Win32ProcessInfo.class
 com\tec02\API\FileInfo.class
 com\tec02\Time\WaitTime\Class\TimeH.class
-com\tec02\Robot\MyControl.class
 com\tec02\communication\Communicate\IgetName.class
 com\tec02\communication\socket\Unicast\Server\HandleManagement.class
 com\tec02\communication\Communicate\Impl\Telnet\Telnet.class
@@ -66,6 +68,7 @@ com\tec02\Robot\MyRobot.class
 com\tec02\communication\socket\Unicast\Server\SocketServer.class
 com\tec02\communication\socket\Unicast\commons\Interface\IFilter.class
 com\tec02\Jmodel\IAction.class
+com\tec02\opencv\FindObjectResult.class
 com\tec02\Jmodel\Component\AbsMenuAndAction.class
 com\tec02\API\JsonBodyAPI.class
 com\tec02\FileService\MD5.class
@@ -74,6 +77,7 @@ com\tec02\Jmodel\Component\AbsMenuAndAction$1.class
 com\tec02\Jmodel\Component\MyTable$1.class
 com\tec02\user32\User32.class
 com\tec02\communication\Communicate\ISender.class
+com\tec02\opencv\Common.class
 com\tec02\communication\Communicate\Impl\PowerSwitch\PowerSwitch.class
 com\tec02\Time\WaitTime\Class\TimeS.class
 com\tec02\common\MyObjectMapper.class

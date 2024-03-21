@@ -6,8 +6,11 @@ package com.tec02.Jmodel.Component;
 
 import com.tec02.Jmodel.IAction;
 import java.awt.Component;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JComponent;
 
 /**
@@ -20,15 +23,32 @@ public abstract class AbsMenuAndAction<T extends JComponent> {
     protected PopupMenu menu;
     protected PopupMenu selectedMenu;
     protected IAction<MouseEvent> doubleClickAction;
+    private IAction<KeyEvent> actionKeyPressed;
+    private final HashMap<Integer, IAction<KeyEvent>> keyEvents;
     protected final T component;
 
     public AbsMenuAndAction(T component) {
         if (component == null) {
             throw new NullPointerException("Table cannot be null");
         }
+        component.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                if (actionKeyPressed != null) {
+                    actionKeyPressed.action(evt);
+                } else {
+                    for (Map.Entry<Integer, IAction<KeyEvent>> entry : keyEvents.entrySet()) {
+                        if (evt.getKeyCode() == entry.getKey()) {
+                            entry.getValue().action(evt);
+                        }
+                    }
+                }
+            }
+        });
         this.menu = new PopupMenu();
         this.selectedMenu = new PopupMenu();
         this.component = component;
+        this.keyEvents = new HashMap<>();
         this.component.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -47,6 +67,38 @@ public abstract class AbsMenuAndAction<T extends JComponent> {
                 }
             });
         }
+    }
+
+    public void putAllKeyEvents(HashMap<Integer, IAction<KeyEvent>> keyEvents) {
+        this.keyEvents.putAll(keyEvents);
+    }
+    
+    public void addKeyEventAction(int keyCode, IAction<KeyEvent> event) {
+        this.keyEvents.put(keyCode, event);
+    }
+
+    public void clearKeyEventActions() {
+        this.keyEvents.clear();
+    }
+
+    public HashMap<Integer, IAction<KeyEvent>> getKeyEventActions() {
+        return keyEvents;
+    }
+
+    public void setActionKeyPressed(IAction<KeyEvent> actionKeyPressed) {
+        this.actionKeyPressed = actionKeyPressed;
+    }
+
+    public IAction<KeyEvent> getActionKeyPressed() {
+        return actionKeyPressed;
+    }
+
+    public IAction<MouseEvent> getDoubleClickAction() {
+        return doubleClickAction;
+    }
+
+    public T getComponent() {
+        return component;
     }
 
     private void mouseClickdAction(MouseEvent e) {

@@ -12,6 +12,8 @@ import com.tec02.Time.WaitTime.AbsTime;
  */
 public interface IReadable extends IgetName{
     
+    void stopRead();
+    
     StringBuffer getStringResult();
     
     String readLine();

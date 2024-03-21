@@ -3,7 +3,6 @@ D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\Jmodel\treeFile\TreeFold
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\DHCP\MacUtil.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\socket\Unicast\commons\Interface\IConnect.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\user32\Win32ProcessInfo.java
-D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\Robot\MyControl.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\socket\Unicast\commons\SocketLogger.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\API\RequestParam.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\API\JwtUtil.java
@@ -24,16 +23,19 @@ D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\DHCP\Arp.j
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\DHCP\DHCP.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\Communicate\IgetName.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\API\JsonBodyAPI.java
+D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\opencv\Common.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\Jmodel\Component\MyChooser.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\common\MyObjectMapper.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\user32\User32Util.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\Time\WaitTime\Class\TimeS.java
+D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\opencv\MatchTemplate.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\Communicate\ReadStream.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\socket\Unicast\commons\Interface\IObjectClientReceiver.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\FileService\MD5.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\Jmodel\Component\AbsMenuAndAction.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\Jmodel\Component\MyTable.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\Communicate\IConnect.java
+D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\opencv\FindObjectResult.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\common\Util.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\Time\WaitTime\Class\TimeH.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\Communicate\Impl\Telnet\Telnet.java
@@ -47,6 +49,7 @@ D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\FileService\Zip.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\Communicate\Impl\PowerSwitch\PowerSwitch.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\API\FileInfo.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\Robot\MyRobot.java
+D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\Robot\AutoClickOnScreen.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\Time\TimeBase.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\socket\Unicast\commons\Interface\IFilter.java
 D:\Maven-Project\AppServiceUtil\src\main\java\com\tec02\communication\socket\Unicast\Server\SocketServer.java
