@@ -4,7 +4,7 @@
  */
 package com.tec02.API;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import java.util.Set;
 
 /**

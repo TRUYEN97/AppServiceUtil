@@ -4,7 +4,7 @@
  */
 package com.tec02.API;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import com.tec02.common.DataWareHouse;
 import java.awt.HeadlessException;
 import java.util.List;

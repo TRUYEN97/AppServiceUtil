@@ -77,8 +77,7 @@ public class MyRobot {
         if (hwnd == null) {
             return false;
         }
-        return user32.ShowWindow(hwnd, 1)
-                && user32.SetForegroundWindow(hwnd);
+        return user32.ShowWindow(hwnd, 1);
     }
     
     public boolean moveMouseOnWindow(String title) {

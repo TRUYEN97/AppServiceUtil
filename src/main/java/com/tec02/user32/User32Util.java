@@ -37,12 +37,16 @@ public class User32Util {
         return ids;
     }
 
+    public boolean showWindows(String windowName) {
+        WinDef.HWND hwnd = user32.FindWindow(0, windowName);
+        return showWindows(hwnd);
+    }
+
     public boolean showWindows(WinDef.HWND hwnd) {
         if (hwnd == null) {
             return false;
         }
-        return user32.ShowWindow(hwnd, 9)
-                && user32.SetForegroundWindow(hwnd);
+        return user32.ShowWindow(hwnd, 1);
     }
 
     public boolean killProcessByName(String processName) {
@@ -78,14 +82,5 @@ public class User32Util {
         return Native.toString(title);
     }
 
-    public static Win32ProcessInfo[] addToProcessList(Win32ProcessInfo[] processes, Win32ProcessInfo processToAdd) {
-        if (processes == null) {
-            return new Win32ProcessInfo[]{processToAdd};
-        } else {
-            Win32ProcessInfo[] newProcesses = new Win32ProcessInfo[processes.length + 1];
-            System.arraycopy(processes, 0, newProcesses, 0, processes.length);
-            newProcesses[processes.length] = processToAdd;
-            return newProcesses;
-        }
-    }
+    
 }
