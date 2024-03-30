@@ -17,7 +17,7 @@ public class ClientLogger extends SocketLogger{
     public ClientLogger(String path, String host, String hostName, int port) {
         super(path);
         from = String.format("%s(%s)", Keywords.CLIENT, Keywords.THIS);
-        to = String.format("%s(%s,%s)", hostName, host, port);
+        to = String.format("%s(%s:%s)", hostName, host, port);
     }
 
     public void logSend(String data, Object... params) {

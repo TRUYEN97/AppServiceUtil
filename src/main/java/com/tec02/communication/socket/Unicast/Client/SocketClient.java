@@ -13,12 +13,14 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import com.tec02.communication.socket.Unicast.commons.Interface.IObjectClientReceiver;
+import java.io.Closeable;
+import java.io.IOException;
 
 /**
  *
  * @author Administrator
  */
-public class SocketClient implements Runnable, Idisconnect, IIsConnect {
+public class SocketClient implements Runnable, Idisconnect, IIsConnect, Closeable {
 
     private final String host;
     private final String hostName;
@@ -56,6 +58,14 @@ public class SocketClient implements Runnable, Idisconnect, IIsConnect {
         return host;
     }
 
+    public String readLine() throws IOException {
+        String line = this.inputStream.readLine();
+        if (line != null) {
+            return line.replaceAll("<newline>", "\r\n");
+        }
+        return null;
+    }
+
     public int getPort() {
         return port;
     }
@@ -82,6 +92,7 @@ public class SocketClient implements Runnable, Idisconnect, IIsConnect {
             if (!isConnect()) {
                 return false;
             }
+            data = data.replaceAll("\r\n", "<newline>");
             this.outputStream.println(data);
             this.logger.logSend(data);
             return true;
@@ -98,12 +109,15 @@ public class SocketClient implements Runnable, Idisconnect, IIsConnect {
     public void run() {
         try {
             String data;
-            while (isConnect() && (data = this.inputStream.readLine()) != null) {
+            while (isConnect() && (data = readLine()) != null) {
                 if (data.trim().isBlank()) {
                     continue;
                 }
+                data = data.replaceAll("<newline>", "\r\n");
                 this.logger.logReceived(data);
-                this.clientReceiver.receiver(this, data);
+                if (this.clientReceiver != null) {
+                    this.clientReceiver.receiver(this, data);
+                }
             }
         } catch (Exception ex) {
             if (debug) {
@@ -148,6 +162,11 @@ public class SocketClient implements Runnable, Idisconnect, IIsConnect {
             }
             return false;
         }
+    }
+
+    @Override
+    public void close() throws IOException {
+        disconnect();
     }
 
 }

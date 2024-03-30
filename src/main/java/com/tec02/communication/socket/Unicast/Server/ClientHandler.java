@@ -13,8 +13,8 @@ import com.tec02.communication.socket.Unicast.commons.Keywords;
 import com.tec02.communication.socket.Unicast.commons.Interface.IFilter;
 import com.tec02.communication.socket.Unicast.commons.Interface.IObjectServerReceiver;
 import com.tec02.communication.socket.Unicast.commons.ServerLogger;
-import com.tec02.communication.socket.Unicast.commons.SocketLogger;
 import java.io.BufferedReader;
+import java.io.Closeable;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
@@ -22,7 +22,7 @@ import java.io.PrintWriter;
  *
  * @author Administrator
  */
-public class ClientHandler implements Runnable, Idisconnect, IIsConnect {
+public class ClientHandler implements Runnable, Idisconnect, IIsConnect, Closeable {
 
     private final Socket socket;
     private final PrintWriter outputStream;
@@ -44,7 +44,7 @@ public class ClientHandler implements Runnable, Idisconnect, IIsConnect {
         this.connect = true;
         this.handlerManager = handlerManager;
         this.name = String.format("Client-%s(%s)", ClientHandler.number++,
-                socket.getLocalSocketAddress());
+                socket.getInetAddress().getHostAddress());
         this.logger.logConnected(name);
     }
 
@@ -96,8 +96,11 @@ public class ClientHandler implements Runnable, Idisconnect, IIsConnect {
                     if (data.trim().isBlank()) {
                         continue;
                     }
+                    data = data.replaceAll("<newline>", "\r\n");
                     this.logger.logReceived(name, data);
-                    this.objectAnalysis.receiver(this, data);
+                    if (this.objectAnalysis != null) {
+                        this.objectAnalysis.receiver(this, data);
+                    }
                 }
             }
         } catch (IOException e) {
@@ -111,7 +114,11 @@ public class ClientHandler implements Runnable, Idisconnect, IIsConnect {
     }
 
     public String readLine() throws IOException {
-        return this.inputStream.readLine();
+        String line = this.inputStream.readLine();
+        if (line != null) {
+            return line.replaceAll("<newline>", "\r\n");
+        }
+        return null;
     }
 
     @Override
@@ -135,6 +142,7 @@ public class ClientHandler implements Runnable, Idisconnect, IIsConnect {
             if (!isConnect()) {
                 return false;
             }
+            data = data.replaceAll("\r\n", "<newline>");
             this.outputStream.println(data);
             this.logger.logSend(name, data);
             return true;
@@ -145,6 +153,11 @@ public class ClientHandler implements Runnable, Idisconnect, IIsConnect {
             }
             return false;
         }
+    }
+
+    @Override
+    public void close() throws IOException {
+        disconnect();
     }
 
 }

@@ -73,7 +73,7 @@ public class MyObjectMapper {
     }
 
     public static void update(final Object source, Object target) {
-        if (source == null || target == null) {
+        if (source == null || target == null || source.equals(target)) {
             return;
         }
         MyObjectMapper mapperUtil = new MyObjectMapper();
@@ -82,7 +82,7 @@ public class MyObjectMapper {
     }
 
     public static void copy(final Object source, Object target) {
-        if (source == null || target == null) {
+        if (source == null || target == null || source.equals(target)) {
             return;
         }
         MyObjectMapper mapperUtil = new MyObjectMapper();

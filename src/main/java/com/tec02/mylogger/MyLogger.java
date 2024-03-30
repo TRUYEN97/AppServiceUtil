@@ -27,6 +27,8 @@ public class MyLogger {
     private StringBuilder log;
     private boolean saveMemory;
     private List<Queue<String>> queueLogs;
+    private boolean dailyLog = false;
+    private String oldDay = "";
 
     public MyLogger() {
         this(TimeBase.UTC);
@@ -46,10 +48,14 @@ public class MyLogger {
         }
     }
 
+    public void setDailyLog(boolean dailyLog) {
+        this.dailyLog = dailyLog;
+    }
+
     public void setFile(String fileStr) {
         setFile(new File(fileStr));
     }
-    
+
     public void setFile(File file) {
         if (file == null) {
             return;
@@ -77,7 +83,7 @@ public class MyLogger {
         addLog(strLog);
     }
 
-    public synchronized void addLog(String key, Object str){
+    public synchronized void addLog(String key, Object str) {
         if (str == null) {
             add(String.format("%s:  [%s] null\r\n",
                     this.timeBase.getDateTime(TimeBase.DATE_TIME_MS), key));
@@ -103,6 +109,11 @@ public class MyLogger {
         }
         addToQueue(log);
         if (file != null) {
+            String nowDay = this.timeBase.getDateTime(TimeBase.YYYY_MM_DD);
+            if (dailyLog && !oldDay.equalsIgnoreCase(nowDay)) {
+                setFile(new File(file, nowDay.concat(".txt")));
+                oldDay = nowDay;
+            }
             try ( FileWriter writer = new FileWriter(file, true)) {
                 writer.write(log);
                 writer.flush();

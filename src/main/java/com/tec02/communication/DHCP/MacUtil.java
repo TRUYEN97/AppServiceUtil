@@ -21,6 +21,10 @@ public class MacUtil {
         return mac != null && mac.matches(MAC_REGEX);
     }
 
+    public static String macFormat(String mac) {
+       return macFormat(mac, 17);
+    }
+    
     public static String macFormat(String mac, int macLength) {
         mac = mac.toUpperCase();
         if (!mac.contains(":")) {
