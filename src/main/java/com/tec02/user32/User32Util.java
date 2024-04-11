@@ -46,7 +46,7 @@ public class User32Util {
         if (hwnd == null) {
             return false;
         }
-        return user32.ShowWindow(hwnd, 1);
+        return user32.ShowWindow(hwnd, 1) && user32.SetForegroundWindow(hwnd);
     }
 
     public boolean killProcessByName(String processName) {

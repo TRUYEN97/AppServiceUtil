@@ -2706,4 +2706,6 @@ public interface User32 extends StdCallLibrary, WinUser, WinNT {
     boolean CallWindowProc(Long nlndex, WinDef.HWND hWnd, String Msg, String wParam, String IParam);
 
     boolean EnumWindows(WinUser.WNDENUMPROC wndenumproc, Object object);
+
+
 }

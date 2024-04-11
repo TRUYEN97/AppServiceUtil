@@ -47,10 +47,10 @@ public class MyRobot {
         int[] xywh = new int[4];
         user32.GetWindowRect(hwnd, xywh);
         double scale = Toolkit.getDefaultToolkit().getScreenResolution() / 96.0;
-        xywh[0] = (int) (xywh[0] * scale);
-        xywh[1] = (int) (xywh[1] * scale);
-        xywh[2] = (int) (xywh[2] * scale);
-        xywh[3] = (int) (xywh[3] * scale);
+        xywh[0] = (int) (xywh[0] / scale);
+        xywh[1] = (int) (xywh[1] / scale);
+        xywh[2] = (int) (xywh[2] / scale);
+        xywh[3] = (int) (xywh[3] / scale);
         return xywh;
     }
 
@@ -77,9 +77,9 @@ public class MyRobot {
         if (hwnd == null) {
             return false;
         }
-        return user32.ShowWindow(hwnd, 1);
+        return user32.ShowWindow(hwnd, 1) && user32.SetForegroundWindow(hwnd);
     }
-    
+
     public boolean moveMouseOnWindow(String title) {
         if (title == null) {
             return false;
@@ -129,12 +129,20 @@ public class MyRobot {
         return user32.CloseWindow(hwnd);
     }
 
+    public boolean closeWindows(String title) {
+        WinDef.HWND hwnd = user32.FindWindow(0, title);
+        if (hwnd != null) {
+            return user32.CloseWindow(hwnd);
+        }
+        return true;
+    }
+
     public boolean saveScreenCapture(int[] xywh, String imageName) {
         if (!imageName.contains(".")) {
             return false;
         }
         String formatName = imageName.substring(imageName.lastIndexOf(".") + 1);
-        return saveScreenCapture(xywh, formatName, imageName);
+        return saveScreenCapture(xywh, imageName, formatName);
     }
 
     public BufferedImage createScreenCaptureBufferedImage(String windowName) {
@@ -150,9 +158,13 @@ public class MyRobot {
     }
 
     public boolean saveScreenCapture(int[] xywh, String imageName, String imageType) {
+        BufferedImage screenshot = createScreenCaptureBufferedImage(xywh);
+        return saveBufferedImage(screenshot, imageType, imageName);
+    }
+
+    private boolean saveBufferedImage(BufferedImage bufferedImage, String imageType, String imageName) {
         try {
-            BufferedImage screenshot = createScreenCaptureBufferedImage(xywh);
-            ImageIO.write(screenshot, imageType, new File(imageName));
+            ImageIO.write(bufferedImage, imageType, new File(imageName));
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -176,6 +188,7 @@ public class MyRobot {
             mouseMove(xywh[0] + xywh1[0] + xywh1[2] / 2, xywh[1] + xywh1[1] + xywh1[3] / 2);
             click();
             mouseMove(xywh[0] + xywh1[0] + xywh1[2] + 2, xywh[1] + xywh1[1] + xywh1[3] + 2);
+            delay(200);
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -185,7 +198,7 @@ public class MyRobot {
 
     public boolean sendMessager(String mess) {
         try {
-            for (char key : mess.toUpperCase().toCharArray()) {
+            for (char key : mess.toCharArray()) {
                 sendKey(key);
             }
             return true;
@@ -206,10 +219,40 @@ public class MyRobot {
     }
 
     public void sendKey(int kiTu) {
-        this.robot.keyPress(kiTu);
-        this.robot.delay(10);
-        this.robot.keyRelease(kiTu);
-        this.robot.delay(10);
+        boolean shift = false;
+        if (kiTu <= 'Z' && kiTu >= 'A') {
+            shift = true;
+        } else if (kiTu <= 'z' && kiTu >= 'a') {
+            kiTu -= 32;
+        }
+        try {
+            if (shift) {
+                this.robot.keyPress(KeyEvent.VK_SHIFT);
+            }
+            this.robot.keyPress(kiTu);
+            this.delay(100);
+        } finally {
+            this.robot.keyRelease(kiTu);
+            if (shift) {
+                this.robot.keyRelease(KeyEvent.VK_SHIFT);
+            }
+        }
+        this.delay(100);
+    }
+
+    public void mouseWheel(int wheelAmt) {
+        robot.mouseWheel(wheelAmt);
+    }
+
+    public void mouseDragAndDrop(int startX, int startY, int endX, int endY) {
+        startX = startX < 0 ? 0 : startX;
+        startY = startY < 0 ? 0 : startY;
+        endX = endX < 0 ? 0 : endX;
+        endY = endY < 0 ? 0 : endY;
+        robot.mouseMove(startX, startY);
+        robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+        robot.mouseMove(endX, endY);
+        robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
     }
 
     /* The following standard button masks are also accepted:
@@ -234,9 +277,13 @@ public class MyRobot {
      */
     public void click(int buttons) {
         this.robot.mousePress(buttons);
-        this.robot.delay(200);
+        delay(300);
         this.robot.mouseRelease(buttons);
-        this.robot.delay(200);
+        delay(200);
+    }
+
+    public void delay(int time) {
+        this.robot.delay(time);
     }
 
     public void click() {
