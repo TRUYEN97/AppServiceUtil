@@ -34,7 +34,7 @@ public class SocketClient implements Runnable, Idisconnect, IIsConnect, Closeabl
     private boolean debug;
 
     public SocketClient(String host, int port, IObjectClientReceiver objectAnalysis) {
-        this(host, Keywords.SERVER, port, objectAnalysis);
+        this(Keywords.SERVER, host, port, objectAnalysis);
     }
 
     public SocketClient(String hostName, String host, int port, IObjectClientReceiver objectAnalysis) {
