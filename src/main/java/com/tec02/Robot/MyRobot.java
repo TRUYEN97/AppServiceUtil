@@ -35,6 +35,18 @@ public class MyRobot {
     public int[] getWindowLocation(String windowsName) {
         return getWindowLocation(windowsName, true);
     }
+    
+    public void moveWindows(String title, int X, int Y, int nWidth, int nHeight){
+         WinDef.HWND hwnd = user32.FindWindow(0, title);
+        if (hwnd == null) {
+            return;
+        }
+        user32.MoveWindow(hwnd, X, Y, nWidth, nHeight, true);
+    }
+    
+    public void moveWindows(WinDef.HWND hWnd, int X, int Y, int nWidth, int nHeight){
+        user32.MoveWindow(hWnd, X, Y, nWidth, nHeight, true);
+    }
 
     public int[] getWindowLocation(String windowsName, boolean showWindows) {
         WinDef.HWND hwnd = user32.FindWindow(0, windowsName);
